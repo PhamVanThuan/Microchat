@@ -31,7 +31,7 @@ public class MicrochatWebApp extends HttpApp{
 				 "chatManagerActor");
 		
 		this.logInController = new UsersController(logInActor, chatManagerActor);
-		this.wsController = new UsersWSController(logInActor, chatManagerActor);
+		this.wsController = new UsersWSController(logInActor, chatManagerActor, frontSystem);
 		bindRoute("localhost", 8080, frontSystem);
 	}
 

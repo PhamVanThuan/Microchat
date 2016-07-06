@@ -1,9 +1,7 @@
 package com.aaj.microchat.client.web.actor;
 
 import akka.actor.Props;
-import akka.http.javadsl.model.ws.TextMessage;
 import akka.stream.actor.ActorPublisherMessage;
-import akka.stream.actor.ActorSubscriberMessage;
 import akka.stream.actor.UntypedActorPublisher;
 
 /**
@@ -25,12 +23,15 @@ public class WebSocketDataPublisherActor extends UntypedActorPublisher<Object> {
 		System.out.println("pub: " + this.getSender());
 		if(ActorPublisherMessage.Request.class.equals(arg.getClass())){
 			ActorPublisherMessage.Request m = (ActorPublisherMessage.Request)arg;
-			while (isActive() && totalDemand() > 0) {
-				System.out.println(m);
-				onNext(m);
-			}
+			//while (isActive() && totalDemand() > 0) {
+				System.out.println("mmm" + m);
+				System.out.println("arrrg " + arg);
+				//Send an element to the stream subscriber.
+				//onNext("hola");
+			//}
 		}else{
-			System.out.println(arg);
+			System.out.println("arrrg " + arg);
+			//onNext(arg);
 		}
 
 	}
