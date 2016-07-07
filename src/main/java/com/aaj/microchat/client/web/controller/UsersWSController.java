@@ -95,14 +95,15 @@ public class UsersWSController extends WebSocketDirectives implements Controller
 		Source<Message, ActorRef> metricsPublisher = Source.actorPublisher(WebSocketDataPublisherActor.getProps());
 
 		Sink<Message, ActorRef> metricsSink = Sink.actorSubscriber(WebSocketCommandSubscriber.getProps());
-		Source<Message, ActorRef> metricsSource = metricsPublisher.map((measurementData) -> TextMessage.create(gson
-				.toJson(measurementData)));
+		Source<Message, ActorRef> metricsSource = metricsPublisher.map((measurementData) -> { 
+				return measurementData;//return TextMessage.create(gson.toJson(measurementData));
+			}
+		);
 		// Flow<Message, Message, ?> flow = Flow.fromSinkAndSource(metricsSink,
 		// metricsSource);
 		Flow<Message, Message, ?> flow = Flow.fromSinkAndSourceMat(metricsSink, metricsSource,
 				(sinkActor, sourceActor) -> {
-					sinkActor.tell(new RegisterSourceMessage(sourceActor), sourceActor); 
-					return TextMessage.create(Source.single("Hello Kid!"));
+					sinkActor.tell(new RegisterSourceMessage(sourceActor), sourceActor);return null;
 				});
 		return flow;
 	}

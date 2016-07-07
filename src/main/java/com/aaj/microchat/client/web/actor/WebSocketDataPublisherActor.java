@@ -28,7 +28,7 @@ public class WebSocketDataPublisherActor extends UntypedActorPublisher<Object> {
 			//while (isActive() && totalDemand() > 0) {
 				System.out.println("mmm" + m);
 				System.out.println("arrrg 1" + arg);
-				TextMessage.create(Source.single("ack!"));
+				onNext(TextMessage.create(Source.single("ack!")));
 				//Send an element to the stream subscriber.
 				
 			//}
