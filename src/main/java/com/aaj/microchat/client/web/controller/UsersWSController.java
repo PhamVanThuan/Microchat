@@ -8,11 +8,10 @@ import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.http.javadsl.model.ws.Message;
 import akka.http.javadsl.model.ws.TextMessage;
-import akka.http.javadsl.server.RequestVal;
+
 import akka.http.javadsl.server.Route;
 import akka.http.javadsl.server.directives.WebSocketDirectives;
-import akka.http.javadsl.server.values.Parameters;
-import akka.http.javadsl.server.values.PathMatchers;
+
 import akka.japi.JavaPartialFunction;
 import akka.stream.impl.ActorPublisher;
 import akka.stream.javadsl.Flow;
@@ -31,8 +30,8 @@ public class UsersWSController extends WebSocketDirectives implements Controller
 	final ActorRef chatsActor;
 	final CompletableFuture<Route> routes;
 
-	private RequestVal<String> name = Parameters.stringValue("name");
-	final RequestVal<String> userNamePathParam = PathMatchers.segment();
+	//private RequestVal<String> name = Parameters.stringValue("name");
+	//final RequestVal<String> userNamePathParam = PathMatchers.segment();
 	private final ActorRef echoActor;
 
 	public UsersWSController(ActorRef logInActor, ActorRef chatsActor, ActorSystem system) {
@@ -50,8 +49,8 @@ public class UsersWSController extends WebSocketDirectives implements Controller
 
 	private CompletableFuture<Route> initRoutes() {
 		return CompletableFuture.supplyAsync(() -> {
-			return route(path("metrics").route(handleWebSocketMessages(metrics())),
-					path("wshello").route(handleWebSocketMessages(greeter())));
+			return route(path("metrics", ()->handleWebSocketMessages(metrics())),
+					path("wshello", ()->handleWebSocketMessages(greeter())));
 		});
 	}
 
