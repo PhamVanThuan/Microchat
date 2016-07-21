@@ -76,10 +76,12 @@ public class UsersController extends AllDirectives implements Controller {
 		return CompletableFuture
 				.supplyAsync(() -> {
 					Route addHandler = parameter(StringUnmarshallers.INTEGER, "x",
-							x -> parameter(StringUnmarshallers.INTEGER, "y", y -> {
+							x -> parameter(StringUnmarshallers.INTEGER, "y", y -> extractExecutionContext(ctx -> onSuccess(() -> {
 								int result = x + y;
-								return complete(String.format("%d + %d = %d", x, y, result));
-							}));
+								return PatternsCS.ask(logInActor, result,
+										  1000).thenApplyAsync((t) -> { return complete(t.toString()); },
+												  ctx);
+							},Function.identity()))));
 
 					BiFunction<Integer, Integer, Route> subtractHandler = (x, y) -> {
 						int result = x - y;
