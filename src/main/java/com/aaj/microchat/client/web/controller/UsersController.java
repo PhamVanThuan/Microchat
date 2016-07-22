@@ -90,21 +90,21 @@ public class UsersController extends AllDirectives implements Controller {
 
 					return route(
 							// matches the empty path
-							pathSingleSlash(() -> getFromResource("web/calculator.html")),
+							get(()->pathSingleSlash(() -> getFromResource("web/calculator.html"))),
 							// matches paths like this: /add?x=42&y=23
-							path("add", () -> addHandler),
-							path("subtract",
+							get(()->path("add", () -> addHandler)),
+							get(()->path("subtract",
 									() -> parameter(
 											StringUnmarshallers.INTEGER,
 											"x",
 											x -> parameter(StringUnmarshallers.INTEGER, "y",
-													y -> subtractHandler.apply(x, y)))),
+													y -> subtractHandler.apply(x, y))))),
 							// matches paths like this: /multiply/{x}/{y}
-							path(PathMatchers.segment("multiply").slash(integerSegment()).slash(integerSegment()),
-									this::multiply),
-							path(PathMatchers.segment("multiplyAsync").slash(integerSegment()).slash(integerSegment()),
+							get(()->path(PathMatchers.segment("multiply").slash(integerSegment()).slash(integerSegment()),
+									this::multiply)),
+							get(()->path(PathMatchers.segment("multiplyAsync").slash(integerSegment()).slash(integerSegment()),
 									(x, y) -> extractExecutionContext(ctx -> onSuccess(() -> multiplyAsync(ctx, x, y),
-											Function.identity()))),
+											Function.identity())))),
 							post(() -> path("hello",
 									() -> entity(entityToString(), body -> complete("Hello " + body + "!")))));
 

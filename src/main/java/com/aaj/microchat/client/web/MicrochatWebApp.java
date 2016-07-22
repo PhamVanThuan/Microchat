@@ -49,7 +49,7 @@ public class MicrochatWebApp extends AllDirectives {
 	
 	public Route createRoute() {
 		try {
-			return this.wsController.defineRoutes().get();
+			return route(this.logInController.defineRoutes().get(),this.wsController.defineRoutes().get());
 		} catch (Exception e) {
 			throw(new RuntimeException(e));
 		}
