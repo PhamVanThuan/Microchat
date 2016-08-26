@@ -2,9 +2,13 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.aajtech.akka</groupId>
-  <artifactId>Microchat</artifactId>
+  <artifactId>ClusterFrontEnd</artifactId>
   <version>1.0-SNAPSHOT</version>
   
+  <properties>
+		<akka.version>2.4.9</akka.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
   
   	<dependencies>
 		<dependency>
@@ -94,9 +98,5 @@
 			<url>http://repo.typesafe.com/typesafe/snapshots/</url>
 		</repository>
 	</repositories>
-	
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
 
 </project>
